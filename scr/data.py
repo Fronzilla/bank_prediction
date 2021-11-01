@@ -31,6 +31,11 @@ df_types_mapping = {
 
 
 def load_data(session_state) -> NoReturn:
+    """
+
+    :param session_state:
+    :return:
+    """
     st.subheader('Загрузка данных')
     st.write("""
     Загрузите 'csv' файл одним листом.

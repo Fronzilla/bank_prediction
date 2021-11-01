@@ -1,2 +1,2 @@
-# domain_classification_service
-Сервис классификации доменов
+# bank_prediction
+Сервис классификации банков
