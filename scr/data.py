@@ -3,7 +3,6 @@ from typing import NoReturn
 import pandas as pd
 import streamlit as st
 
-ERROR_MESSAGE = "Название / порядок колонок не соответствует шаблону"
 IS_NA = 'В .csv файле есть пропущенные значения'
 
 # маппинг типов данных
@@ -46,6 +45,7 @@ def load_data(session_state) -> NoReturn:
         'HasEDO', 'Город ФМЖ', 'Город регистрации', 'Статус'
              
         """)
+    error_columns = []
 
     data_file = st.file_uploader("Файл формата 'csv', ", type=['csv'])
     if data_file is not None:
@@ -54,8 +54,17 @@ def load_data(session_state) -> NoReturn:
         if df_data.isna().sum().sum():
             st.error(IS_NA)
 
+        for i in list(df_data.columns):
+            if i not in df_types_mapping.keys():
+                error_columns.append(i)
+
+        if error_columns:
+            st.error(f"Название {error_columns} колонок не соответствует шаблону")
+            return
+
         if not list(df_types_mapping.keys()) == list(df_data.columns):
-            st.error(ERROR_MESSAGE)
+            st.error(f"Порядок колонок не соответствует шаблону")
+            return
 
         st.write(df_data.head(5))
         session_state.df_data = df_data
