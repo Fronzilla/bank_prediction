@@ -70,7 +70,10 @@ def main():
             df = session_state.df_data
 
             with st.spinner('Классификация банков...'):
-                result = pd.DataFrame(session_state.model.predict_proba(df), columns=session_state.model.classes_)
+                try:
+                    result = pd.DataFrame(session_state.model.predict_proba(df), columns=session_state.model.classes_)
+                except Exception as e:
+                    st.write(f'Ошибка классификации банков, проверьте входные данные: {e}')
 
             res = pd.concat([df, result], axis=1)
             st.write(result.head(10))
