@@ -78,11 +78,11 @@ def main():
                 except Exception as e:
                     st.write(f'Ошибка классификации банков, проверьте входные данные: {e}')
 
-            res = pd.concat([df, result], axis=1)
+            # res = pd.concat([df, result], axis=1)
             st.write(result.head(10))
 
             st.write('Ссылка на скачивание')
-            csv_download_link(res)
+            csv_download_link(result)
 
 
 if __name__ == '__main__':
