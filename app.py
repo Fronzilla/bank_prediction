@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 
 import scr.session_state as session
 from scr.data import load_data
@@ -69,12 +70,13 @@ def main():
             df = session_state.df_data
 
             with st.spinner('Классификация банков...'):
-                result = session_state.model.predict(df)
+                result = pd.DataFrame(session_state.model.predict_proba(df), columns=session_state.model.classes_)
 
-            df['bank'] = result
+            res = pd.concat([df, result], axis=1)
+            st.write(result.head(10))
 
             st.write('Ссылка на скачивание')
-            csv_download_link(df)
+            csv_download_link(res)
 
 
 if __name__ == '__main__':
