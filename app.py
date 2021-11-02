@@ -62,6 +62,9 @@ def main():
                         (0748) ПАО Промсвязьбанк
             """)
 
+        with st.sidebar.beta_expander('Пример входных данных?'):
+            st.write(f"{csv_download_link(pd.read_csv('model/test.csv'), name='bank_example')}")
+
         with st.spinner('Загрузка метаданных...'):
             load_data(session_state)  # загрузка данных в сессию
             load_model(session_state)  # загрузка модели в сессию
